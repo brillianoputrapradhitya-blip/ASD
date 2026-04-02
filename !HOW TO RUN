@@ -1,4 +1,4 @@
 1. Make sure every file is in your current directory
-2. Type "g++ -std=c++17 -Iinclude ServerNoJS.cpp QueuePendaftaran.cpp StackRiwayat.cpp SistemPendadaran.cpp -o pendadaran_web -lws2_32", this will create a new .exe file
-3. Type "./pendadaran_web" in your terminal
-4. Click or CTRL-Click on the website address that is shown or go to "http://127.0.0.1:8080/" in your browser
+2. Type "g++ -std=c++11 -pthread Server.cpp Queue.cpp Stack.cpp -o server -lws2_32 -lwsock32" in terminal, this will create a new server.exe file
+3. Type "./server" in your terminal
+4. Click or CTRL-Click on the website address that is shown or go to "http://localhost:8080/" in your browser
