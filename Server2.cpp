@@ -1,10 +1,3 @@
-// Server.cpp
-// Compile di Windows (MSYS2/MinGW):
-//   g++ -std=c++11 -pthread Server.cpp Queue.cpp Stack.cpp -o server -lws2_32 -lwsock32
-// Compile di Linux/Mac:
-//   g++ -std=c++11 -pthread Server.cpp Queue.cpp Stack.cpp -o server
-// Jalankan lalu buka: http://localhost:8080
-
 #include "httplib.h"
 #include "Queue.h"
 #include "Stack.h"
@@ -15,8 +8,6 @@ using namespace std;
 Queue antrean;
 Stack riwayat;
 
-// ambil nilai dari JSON string sederhana
-// contoh: ambilNilai({"nama":"Andi"}, "nama") -> "Andi"
 string ambilNilai(const string& json, const string& key) {
     string cari = "\"" + key + "\":\"";
     int pos = json.find(cari);
@@ -27,7 +18,6 @@ string ambilNilai(const string& json, const string& key) {
     return json.substr(pos, akhir - pos);
 }
 
-// ubah satu node jadi string JSON
 string nodeKeJson(Node* node) {
     return "{\"nama\":\""   + node->data.nama    + "\","
             "\"nim\":\""    + node->data.nim     + "\","
@@ -35,7 +25,6 @@ string nodeKeJson(Node* node) {
             "\"status\":\"" + node->data.status  + "\"}";
 }
 
-// kirim seluruh state (queue + stack) ke browser
 string buatResponse() {
     string qJson = "[";
     Node* curr = antrean.getHead();
@@ -65,7 +54,6 @@ string buatResponse() {
            ",\"stackSize\":" + to_string(riwayat.getSize()) + "}";
 }
 
-// halaman HTML yang langsung dikirim ke browser saat buka localhost:8080
 const string HALAMAN = R"html(<!DOCTYPE html>
 <html lang="id">
 <head>
@@ -372,7 +360,6 @@ int main() {
         res.set_content(buatResponse(), "application/json");
     });
 
-    // tambah pendaftar ke antrean
     svr.Post("/enqueue", [](const httplib::Request& req, httplib::Response& res) {
         Mahasiswa mhs;
         mhs.nama    = ambilNilai(req.body, "nama");
@@ -391,7 +378,6 @@ int main() {
         res.set_content(buatResponse(), "application/json");
     });
 
-    // proses verifikasi - dequeue dari antrean lalu push ke stack riwayat
     svr.Post("/verify", [](const httplib::Request& req, httplib::Response& res) {
         if (antrean.isEmpty()) {
             res.status = 400;
