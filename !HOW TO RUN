@@ -1,7 +1,7 @@
 1. Make sure every file is in your current directory
 
 FOR PURE TERMINAL
-2. Type "g++ main.cpp Queue.cpp Stack.cpp -o program.exe" in terminal, this will create a new server.exe file
+2. Type "g++ main.cpp Queue.cpp Stack.cpp -o program.exe" in terminal, this will create a new program.exe file
 3. Type "./program" in your terminal. It will run
 
 FOR WEB VERSION (Basic)
