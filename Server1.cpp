@@ -1,10 +1,3 @@
-// Server.cpp
-// Compile (Windows MSYS2/MinGW):
-//   g++ -std=c++11 -pthread Server.cpp -o server -lws2_32 -lwsock32
-// Compile (Linux/Mac):
-//   g++ -std=c++11 -pthread Server.cpp -o server
-// Run and open: http://localhost:8080
-
 #include "httplib.h"
 #include <deque>
 #include <iostream>
@@ -18,10 +11,9 @@ struct Mahasiswa {
     std::string status;
 };
 
-std::deque<Mahasiswa> antrean;   // FIFO
-std::vector<Mahasiswa> riwayat;  // LIFO (back = top)
+std::deque<Mahasiswa> antrean;
+std::vector<Mahasiswa> riwayat;
 
-// Very simple JSON value parser for payloads like {"nama":"..."}
 std::string ambilNilai(const std::string& json, const std::string& key) {
     std::string cari = "\"" + key + "\":\"";
     size_t pos = json.find(cari);
@@ -61,7 +53,6 @@ std::string buatStateJson() {
     std::string s = "[";
     for (size_t i = 0; i < riwayat.size(); ++i) {
         if (i) s += ",";
-        // send top first to make UI easy
         const Mahasiswa& m = riwayat[riwayat.size() - 1 - i];
         s += mhsKeJson(m);
     }
